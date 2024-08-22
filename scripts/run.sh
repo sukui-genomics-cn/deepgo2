@@ -63,10 +63,11 @@ device="cuda"
 #    echo ---------------ontology $i----------------
 #    echo train_dgg.py -m $model -ont $i -dr $data_dir -ep $epoch -d $device
 #    python train_dgg.py -m $model -ont $i -dr $data_dir -ep $epoch -d $device
-#    echo train_dgg.py -m $model -ont $i -dr $data_dir
-#    python train_dgg.py -m $model -ont $i -dr $data_dir
+#    echo evaluate.py -m $model -ont $i -dr $data_dir
+#    python evaluate.py -m $model -ont $i -dr $data_dir
 #done
 
+# DGG
 for i in "${arr[@]}"; do
     echo ---------------ontology $i----------------
     echo train_dgg.py -ont $i -dr $data_dir -ep $epoch -d $device
@@ -74,3 +75,21 @@ for i in "${arr[@]}"; do
     echo evaluate.py -m dgg -ont $i -dr $data_dir
     python evaluate.py -m dgg -dr $data_dir
 done
+
+model="deepgogat"
+for i in "${arr[@]}"; do
+    echo ---------------ontology $i----------------
+    echo train_gat.py -m $model -ont $i -dr $data_dir -ep $epoch -d $device
+    python train_gat.py -m $model -ont $i -dr $data_dir -ep $epoch -d $device
+    echo evaluate.py -m $model -ont $i -dr $data_dir
+    python evaluate.py -m $model -ont $i -dr $data_dir
+done
+
+
+#for i in "${arr[@]}"; do
+#    echo ---------------ontology $i----------------
+#    echo train_dgg.py -ont $i -dr $data_dir -ep $epoch -d $device
+#    python train_dgg.py -ont $i -dr $data_dir -ep $epoch -d $device
+#    echo evaluate.py -m dgg -ont $i -dr $data_dir
+#    python evaluate.py -m dgg -dr $data_dir
+#done

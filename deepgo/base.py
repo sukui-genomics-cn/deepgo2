@@ -103,7 +103,7 @@ class BaseDeepGOModel(nn.Module):
         # Initialize embedding layers
         k = math.sqrt(1 / embed_dim)
         nn.init.uniform_(self.go_embed.weight, -k, k)
-        self.go_rad = nn.Embedding(nb_gos + nb_zero_gos, 1)
+        self.go_rad = nn.Embedding(nb_gos + nb_zero_gos, 1)  # 获取每个公理的半径
         nn.init.uniform_(self.go_rad.weight, -k, k)
         self.rel_embed = nn.Embedding(nb_rels + 1, embed_dim)
         nn.init.uniform_(self.rel_embed.weight, -k, k)
@@ -145,7 +145,7 @@ class BaseDeepGOModel(nn.Module):
         d = self.go_norm(self.go_embed(data[:, 1]))
         rc = th.abs(self.go_rad(data[:, 0]))
         rd = th.abs(self.go_rad(data[:, 1]))
-        dist = th.linalg.norm(c - d, dim=1, keepdim=True) + rc - rd
+        dist = th.linalg.norm(c - d, dim=1, keepdim=True) + rc - rd  # C被D包含
         return dist
         
     def nf1_loss(self, data):

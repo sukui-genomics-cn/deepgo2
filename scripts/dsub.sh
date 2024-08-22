@@ -1,10 +1,10 @@
 #!/bin/bash
-#DSUB -n DeepGO2
+#DSUB -n DeepGO2_GAT
 #DSUB -A root.project.P24Z10200N0983
 #DSUB -R 'cpu=64;gpu=1;mem=10000'
 #DSUB -N 1
-#DSUB -eo /home/share/huadjyin/home/s_sukui/03_project/01_GeneLLM/deepgo2/outputs/logs/DeepGO2.%J.%I.err
-#DSUB -oo /home/share/huadjyin/home/s_sukui/03_project/01_GeneLLM/deepgo2/outputs/logs/DeepGO2.%J.%I.out
+#DSUB -eo /home/share/huadjyin/home/s_sukui/03_project/01_GeneLLM/deepgo2/outputs/logs/DeepGO2_GAT.%J.%I.err
+#DSUB -oo /home/share/huadjyin/home/s_sukui/03_project/01_GeneLLM/deepgo2/outputs/logs/DeepGO2_GAT.%J.%I.out
 
 ## must Edit DSUB -oo & -eo file path
 
