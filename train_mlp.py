@@ -29,7 +29,7 @@ from deepgo.metrics import compute_roc
     '--data-root', '-dr', default='data',
     help='Data folder')
 @ck.option(
-    '--ont', '-ont', default='mf', type=ck.Choice(['mf', 'bp', 'cc']),
+    '--ont', '-ont', default='cc', type=ck.Choice(['mf', 'bp', 'cc']),
     help='GO subontology')
 @ck.option(
     '--model-name', '-m', type=ck.Choice([
@@ -110,9 +110,9 @@ def main(data_root, ont, model_name, test_data_name, batch_size, epochs, load, d
                     loss.backward()
                     optimizer.step()
                     train_loss += loss.detach().item()
-            
+
             train_loss /= train_steps
-            
+
             print('Validation')
             net.eval()
             with th.no_grad():

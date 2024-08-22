@@ -1,5 +1,5 @@
 import click as ck
-import pandas as pd
+# import pandas as pd
 from deepgo.utils import Ontology, propagate_annots
 import torch as th
 import numpy as np
@@ -35,7 +35,7 @@ from functools import partial
     '--batch-size', '-bs', default=37,
     help='Batch size for training')
 @ck.option(
-    '--epochs', '-ep', default=256,
+    '--epochs', '-ep', default=10,
     help='Training epochs')
 @ck.option(
     '--load', '-ld', is_flag=True, help='Load Model?')
@@ -74,8 +74,15 @@ def main(data_root, ont, test_data_name, batch_size, epochs, load, device):
     test_nids = test_nids.to(device)
 
     net = DeepGraphGOModel(features_length, n_terms, device).to(device)
+    print(net)
 
     sampler = dgl.dataloading.MultiLayerFullNeighborSampler(2)
+    """
+    第一个Block（记为g1）的dst_nodes是经过第一层GNN处理后，需要更新表示的节点。这些节点的更新依赖于它们从邻居节点收到的消息。
+    在邻居采样的过程中，这些节点的邻居（即g1中的src_nodes）会被捕获，并用于生成第一个Block。
+    第二个Block（记为g2）则是用于第二层GNN处理的。它的src_nodes是那些在第一层之后需要进一步更新表示的节点，
+    这些节点正是第一层输出的目标节点集合。
+    """
     train_dataloader = dgl.dataloading.DataLoader(
         graph, train_nids, sampler,
         batch_size=batch_size,
@@ -145,7 +152,7 @@ def main(data_root, ont, test_data_name, batch_size, epochs, load, device):
 
             scheduler.step()
             
-        log_file.close()
+        # log_file.close()
 
     # Loading best model
     print('Loading the best model')

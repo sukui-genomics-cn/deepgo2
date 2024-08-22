@@ -18,7 +18,7 @@ def get_data(df, features_dict, terms_dict, features_length, features_column):
         elif features_column == 'interpros':
             for feat in row.interpros:
                 if feat in features_dict:
-                    data[i, features_dict[feat]]
+                    data[i, features_dict[feat]] = 1  # TODO 作者这里是不是有异常
         elif features_column == 'mf_preds':
             data[i, :] = th.FloatTensor(row.mf_preds)
         elif features_column == 'prop_annotations':
@@ -32,6 +32,7 @@ def get_data(df, features_dict, terms_dict, features_length, features_column):
                 labels[i, g_id] = 1
     return data, labels
 
+
 def load_data(
         data_root, ont, terms_file, features_length=2560,
         features_column='esm2', test_data_file='test_data.pkl'):
@@ -39,13 +40,12 @@ def load_data(
     terms = terms_df['gos'].values.flatten()
     terms_dict = {v: i for i, v in enumerate(terms)}
     print('Terms', len(terms))
-    
+
     ipr_df = pd.read_pickle(f'{data_root}/{ont}/interpros.pkl')
     iprs = ipr_df['interpros'].values
-    iprs_dict = {v:k for k, v in enumerate(iprs)}
+    iprs_dict = {v: k for k, v in enumerate(iprs)}
     if features_column == 'interpros':
         features_length = len(iprs_dict)
-    
 
     train_df = pd.read_pickle(f'{data_root}/{ont}/train_data.pkl')
     valid_df = pd.read_pickle(f'{data_root}/{ont}/valid_data.pkl')
@@ -61,30 +61,28 @@ def load_data(
 def load_ppi_data(data_root, ont, features_length=2560,
                   features_column='esm2', test_data_file='test_data.pkl',
                   ppi_graph_file='ppi_test.bin'):
-    
     terms_df = pd.read_pickle(f'{data_root}/{ont}/terms.pkl')
     terms = terms_df['gos'].values.flatten()
     terms_dict = {v: i for i, v in enumerate(terms)}
     print('Terms', len(terms))
-    
+
     mf_df = pd.read_pickle(f'{data_root}/mf/terms.pkl')
     mfs = mf_df['gos'].values
-    mfs_dict = {v:k for k, v in enumerate(mfs)}
+    mfs_dict = {v: k for k, v in enumerate(mfs)}
 
     ipr_df = pd.read_pickle(f'{data_root}/{ont}/interpros.pkl')
     iprs = ipr_df['interpros'].values
-    iprs_dict = {v:k for k, v in enumerate(iprs)}
+    iprs_dict = {v: k for k, v in enumerate(iprs)}
 
     feat_dict = None
-    
+
     if features_column == 'interpros':
         features_length = len(iprs_dict)
         feat_dict = iprs_dict
     elif features_column != 'esm2':
         features_length = len(mfs_dict)
         feat_dict = mfs_dict
-    
-    
+
     train_df = pd.read_pickle(f'{data_root}/{ont}/train_data.pkl')
     valid_df = pd.read_pickle(f'{data_root}/{ont}/valid_data.pkl')
     test_df = pd.read_pickle(f'{data_root}/{ont}/{test_data_file}')
@@ -98,7 +96,6 @@ def load_ppi_data(data_root, ont, features_length=2560,
     graph.ndata['labels'] = labels
     train_nids, valid_nids, test_nids = nids['train_nids'], nids['valid_nids'], nids['test_nids']
     return feat_dict, terms_dict, graph, train_nids, valid_nids, test_nids, data, labels, test_df
-
 
 
 def load_normal_forms(go_file, terms_dict):
@@ -117,7 +114,7 @@ def load_normal_forms(go_file, terms_dict):
     nf4 = []
     relations = {}
     zclasses = {}
-    
+
     def get_index(go_id):
         if go_id in terms_dict:
             index = terms_dict[go_id]
@@ -132,7 +129,7 @@ def load_normal_forms(go_file, terms_dict):
         if rel_id not in relations:
             relations[rel_id] = len(relations)
         return relations[rel_id]
-                
+
     with open(go_file) as f:
         for line in f:
             line = line.strip().replace('_', ':')
@@ -143,7 +140,7 @@ def load_normal_forms(go_file, terms_dict):
             if len(left) == 10 and len(right) == 10:
                 go1, go2 = left, right
                 nf1.append((get_index(go1), get_index(go2)))
-            elif left.find('and') != -1: # C and D SubClassOf E
+            elif left.find('and') != -1:  # C and D SubClassOf E
                 go1, go2 = left.split(' and ')
                 go3 = right
                 nf2.append((get_index(go1), get_index(go2), get_index(go3)))
@@ -151,7 +148,7 @@ def load_normal_forms(go_file, terms_dict):
                 rel, go1 = left.split(' some ')
                 go2 = right
                 nf3.append((get_rel_index(rel), get_index(go1), get_index(go2)))
-            elif right.find('some') != -1: # C SubClassOf R some D
+            elif right.find('some') != -1:  # C SubClassOf R some D
                 go1 = left
                 rel, go2 = right.split(' some ')
                 nf4.append((get_index(go1), get_rel_index(rel), get_index(go2)))

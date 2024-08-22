@@ -26,7 +26,7 @@ from deepgo.extract_esm import extract_esm
     '--device', '-d', default='cpu',
     help='Device for ESM2 model')
 def main(swissprot_file, out_file, device):
-    go = Ontology('data/go.obo', with_rels=True)
+    go = Ontology('../data/go.obo', with_rels=True)
     proteins, accessions, sequences, annotations, string_ids, orgs, genes, interpros = load_data(swissprot_file)
     df = pd.DataFrame({
         'proteins': proteins,

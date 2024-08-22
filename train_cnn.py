@@ -5,15 +5,15 @@ import torch as th
 import numpy as np
 from torch import nn
 from torch.nn import functional as F
-from torch import optim
-from sklearn.metrics import roc_curve, auc, matthews_corrcoef
-import copy
-from torch.utils.data import DataLoader, IterableDataset, TensorDataset
-from itertools import cycle
+# from torch import optim
+# from sklearn.metrics import roc_curve, auc, matthews_corrcoef
+# import copy
+# from torch.utils.data import DataLoader, IterableDataset, TensorDataset
+# from itertools import cycle
 import math
 from deepgo.aminoacids import to_onehot, MAXLEN
-from dgl.nn import GraphConv
-import dgl
+# from dgl.nn import GraphConv
+# import dgl
 from deepgo.torch_utils import FastTensorDataLoader
 import csv
 from torch.optim.lr_scheduler import MultiStepLR
@@ -34,15 +34,15 @@ from functools import partial
     '--test-data-name', '-td', default='test', type=ck.Choice(['test', 'nextprot', 'valid']),
     help='Test data set name')
 @ck.option(
-    '--batch-size', '-bs', default=37,
+    '--batch-size', '-bs', default=4,
     help='Batch size for training')
 @ck.option(
-    '--epochs', '-ep', default=256,
+    '--epochs', '-ep', default=10,
     help='Training epochs')
 @ck.option(
     '--load', '-ld', is_flag=True, help='Load Model?')
 @ck.option(
-    '--device', '-d', default='cuda:0',
+    '--device', '-d', default='cuda:1',
     help='Device')
 def main(data_root, ont, test_data_name, batch_size, epochs, load, device):
     go_file = f'{data_root}/go.obo'

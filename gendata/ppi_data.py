@@ -17,10 +17,10 @@ import dgl
 
 @ck.command()
 @ck.option(
-    '--string-db-actions-file', '-sdb', default='data/protein.actions.v11.0.txt.gz'),
+    '--string-db-actions-file', '-sdb', default='data/string_db/protein.actions.v11.0.txt.gz',
     help='String Database Actions file')
 @ck.option(
-    '--data-file', '-df', default='data/swissprot_exp.pkl'),
+    '--data-file', '-df', default='data/swissprot_exp.pkl',
     help='Swissprot pandas DataFrame')
 def main(string_db_actions_file, data_file):
     df = pd.read_pickle(data_file)

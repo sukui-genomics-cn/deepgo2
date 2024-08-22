@@ -46,15 +46,15 @@ def main(in_file, data_root, threshold, batch_size, device):
         terms_file = f'{data_root}/{ont}/terms.pkl'
         out_file = f'{fn}_preds_{ont}.tsv.gz'
         terms_df = pd.read_pickle(terms_file)
-        terms = terms_df['gos'].values.flatten()
+        terms = terms_df['gos'].values.flatten()  # 6851
         terms_dict = {v: i for i, v in enumerate(terms)}
 
         n_terms = len(terms_dict)
 
         nf1, nf2, nf3, nf4, relations, zero_classes = load_normal_forms(
-            go_norm, terms_dict)
-        n_rels = len(relations)
-        n_zeros = len(zero_classes)
+            go_norm, terms_dict)  # 获取关系、节点
+        n_rels = len(relations)  # 207
+        n_zeros = len(zero_classes)  # 75806
         sum_preds = np.zeros((len(proteins), n_terms), dtype=np.float32)
         model = DeepGOModel(2560, n_terms, n_zeros, n_rels, device).to(device)
         for mn in ent_models[ont]:
