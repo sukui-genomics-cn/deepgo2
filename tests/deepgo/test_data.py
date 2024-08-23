@@ -13,12 +13,13 @@ class TestData(unittest.TestCase):
         import pickle
         import pandas as pd
 
-        pkl_file = '/home/share/huadjyin/home/s_sukui/02_data/08_protein/GO/deepgo2/data/cc/test_data.pkl'
+        pkl_file = '/home/share/huadjyin/home/s_sukui/03_project/01_GeneLLM/deepgo2/data/mf/test_predictions_mlp_esm.pkl'
 
         # read pkl file
         with open(pkl_file, 'rb') as f:
             df_test_data = pd.read_pickle(pkl_file)
         df_head = df_test_data.head()
+        test_data_dict = df_head.to_dict(orient='records')
         df_head.to_csv(f'{self.output_dir}/test_data_head.csv', index=False)
         print(df_test_data.keys())
 

@@ -55,7 +55,7 @@ NODE_RANK=${NODE_RANK}
 # nvidia-smi
 arr=("cc" "bp" "mf")
 data_dir="./data"
-epoch=10
+epoch=20
 device="cuda"
 
 #model="dgg"
@@ -67,16 +67,39 @@ device="cuda"
 #    python evaluate.py -m $model -ont $i -dr $data_dir
 #done
 
+
+model="deepgozero_esm_plus"
+echo $model
+for i in "${arr[@]}"; do
+    echo ---------------ontology $i----------------
+    echo train.py -ont $i -m $model -dr $data_dir -ep $epoch -d $device
+    python train.py -ont $i -m $model -dr $data_dir -ep $epoch -d $device
+    echo evaluate.py -m $model -ont $i -dr $data_dir
+    python evaluate.py -m $model -ont $i -dr $data_dir
+done
+
+# CNN
+echo "CNN"
+for i in "${arr[@]}"; do
+    echo ---------------ontology $i----------------
+    echo train_cnn.py -ont $i -dr $data_dir -ep $epoch -d $device
+    python train_cnn.py -ont $i -dr $data_dir -ep $epoch -d $device
+    echo evaluate.py -m deepgocnn -ont $i -dr $data_dir
+    python evaluate.py -m deepgocnn -ont $i  -dr $data_dir
+done
+
 # DGG
+echo "DGG"
 for i in "${arr[@]}"; do
     echo ---------------ontology $i----------------
     echo train_dgg.py -ont $i -dr $data_dir -ep $epoch -d $device
     python train_dgg.py -ont $i -dr $data_dir -ep $epoch -d $device
     echo evaluate.py -m dgg -ont $i -dr $data_dir
-    python evaluate.py -m dgg -dr $data_dir
+    python evaluate.py -m dgg -ont $i  -dr $data_dir
 done
 
 model="deepgogat"
+echo $model
 for i in "${arr[@]}"; do
     echo ---------------ontology $i----------------
     echo train_gat.py -m $model -ont $i -dr $data_dir -ep $epoch -d $device
@@ -84,12 +107,3 @@ for i in "${arr[@]}"; do
     echo evaluate.py -m $model -ont $i -dr $data_dir
     python evaluate.py -m $model -ont $i -dr $data_dir
 done
-
-
-#for i in "${arr[@]}"; do
-#    echo ---------------ontology $i----------------
-#    echo train_dgg.py -ont $i -dr $data_dir -ep $epoch -d $device
-#    python train_dgg.py -ont $i -dr $data_dir -ep $epoch -d $device
-#    echo evaluate.py -m dgg -ont $i -dr $data_dir
-#    python evaluate.py -m dgg -dr $data_dir
-#done
