@@ -8,6 +8,7 @@ function prediction as a form of approximate semantic entailment.
 This repository contains script which were used to build and train the
 DeepGO-SE model together with the scripts for evaluating the model's
 performance.
+![img.png](deepgo-se_introduction.png)
 
 # Dependencies
 * The code was developed and tested using python 3.10.
@@ -20,6 +21,7 @@ performance.
 
 
 # Running DeepGO-SE model (with GOPlus axioms)
+data path in wc: /home/share/huadjyin/home/s_sukui/02_data/08_protein/GO/deepgo2
 Follow these instructions to obtain predictions for your proteins. You'll need
 around 30Gb storage and a GPU with >16Gb memory (or you can use CPU)
 * Download the [data.tar.gz](https://deepgo.cbrc.kaust.edu.sa/data/deepgo2/data.tar.gz)
@@ -95,6 +97,19 @@ and execute the following commands: \
 * Install [Diamond](https://github.com/bbuchfink/diamond/wiki/2.-Installation)
 * Run data generation script: \
   `sh generate_data.sh`
+
+# Model Parase
+
+## DeepGOGraph
+![img.png](output/deepgo_graph.png)
+> https://doi.org/10.1093/bioinformatics/btab270
+
+
+## DeepGO MLP
+![img.png](output/deepgo_mlp.png)
+
+# Reproduction of Result
+![img.png](output/result_repredocution.png)
 
 # Citation
 
