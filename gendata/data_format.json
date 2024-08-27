@@ -1,0 +1,44 @@
+[
+  {
+    "index": 319024,
+    "proteins": "POXIN_VACCW",
+    "accessions": "Q01225; Q76ZM1;",
+    "genes": "3707655",
+    "sequences": "MAMFYAHALGGYDENLHAFPGISSTVANDVRKYSVVSVYNNKYDIVKDKYMWCYSQVNKRYIGALLPMFECNEYLQIGDPIHDQEGNQISIITYRHKNYYALSGIGYESLDLCLEGVGIHHHVLETGNAVYGKVQHDYSTIKEKAKEMNALSPGPIIDYHVWIGDCICQVTAVDVHGKEIMRMRFKKGAVLPIPNLVKVKLGENDTENLSSTISAAPSR",
+    "annotations": [
+      "GO:0061507|IMP",
+      "GO:0004518|IMP",
+      "GO:0039503|IMP"
+    ],
+    "string_ids": [],
+    "orgs": "10254",
+    "interpros": [
+      "IPR006853"
+    ],
+    "exp_annotations": [
+      "GO:0061507",
+      "GO:0004518",
+      "GO:0039503"
+    ],
+    "prop_annotations": [
+      "GO:0019049",
+      "GO:0031347",
+      "GO:0052572"
+    ],
+    "cafa_target": false,
+    "esm2": {
+      "predicts": [
+        "xxx",
+        "xxx"
+      ],
+      "scores": [
+        "xxx",
+        "xxx"
+      ],
+      "features": [
+        "x",
+        "x"
+      ]
+    }
+  }
+]
