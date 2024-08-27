@@ -22,7 +22,7 @@ import dgl
 def main(test_data_name):
 
     for ont in ['mf', 'bp', 'cc']:
-        train_df = pd.read_pickle(f'data/{ont}/train_data.pkl')
+        train_df = pd.read_pickle(f'data/{ont}/train_data.pkl') # 作者提供的train_data.pkl无interactions，可以在swissprot_exp.pkl中获得
         proteins = train_df['proteins']
         prot_idx = {v: k for k, v in enumerate(proteins)}
         src = []
@@ -113,6 +113,7 @@ def main(test_data_name):
                 'valid_nids': th.LongTensor(np.arange(train_n, train_n + valid_n)),
                 'test_nids': th.LongTensor(np.arange(train_n + valid_n, train_n + valid_n + test_n))
             })
+    # 可以直接将src,dst, 转为pyg的数据
 
 if __name__ == '__main__':
     main()

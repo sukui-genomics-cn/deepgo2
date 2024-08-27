@@ -64,6 +64,7 @@ def main(go_file, data_file, sim_file):
         prot_idx = {v:k for k, v in enumerate(proteins)}
         sim = {}
         train_prots = set()
+        # TODO 缺少swissprot_exp.sim文件， 这里的目的就是根据任务划分train，val， test数据集，同时将interactions保存到文件中
         with open(sim_file) as f:
             for line in f:
                 it = line.strip().split('\t')
