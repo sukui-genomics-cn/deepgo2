@@ -67,7 +67,7 @@ def main(go_file, data_file, sim_file):
         # TODO 缺少swissprot_exp.sim文件， 这里的目的就是根据任务划分train，val， test数据集，同时将interactions保存到文件中
         with open(sim_file) as f:
             for line in f:
-                it = line.strip().split('\t')
+                it = line.strip().split('\t') # qseqid sseqid bitscore pident
                 p1, p2, score = it[0], it[1], float(it[2]) / 100.0
                 if p1 == p2:
                     continue
@@ -81,6 +81,8 @@ def main(go_file, data_file, sim_file):
                 sim[p2].append(p1)
 
         used = set()
+        # 这段代码的最终目的是将蛋白质序列划分为不同的组件或群组。这通常用于机器学习任务中的分层抽样，
+        # 确保训练集、验证集和测试集中的样本分布是均匀的。
         def dfs(prot):
             stack = deque()
             stack.append(prot)
